@@ -23,7 +23,7 @@ list(APPEND EXE_SRC
     wrf_io_flags.h)
 
 # Use IO stubs in place of WRFLIB
-if(NOT wrf_FOUND)
+if(NOT wrfio_FOUND)
   list(APPEND EXE_SRC
     io_int_stubs.f)
 endif()
@@ -38,6 +38,11 @@ target_link_libraries(${EXENAME} PRIVATE
   nemsio::nemsio
   sfcio::sfcio
   sigio::sigio)
+
+if(wrfio_FOUND)
+  target_link_libraries(${EXENAME} PRIVATE
+    wrfio::wrfio)
+endif()
 
 if(OpenMP_Fortran_FOUND)
   target_link_libraries(${EXENAME} PUBLIC OpenMP::OpenMP_Fortran)
